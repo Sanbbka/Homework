@@ -1,59 +1,96 @@
 import java.util.*;
+
 import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
+
 public class Interface {
-public static void main(String []args){
-ButtonFrame frame= new ButtonFrame();//создаем фрейм
-frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//операция отвечающая за окончание программы после закрытия фрейма
-frame.setVisible(true);//делаем фрейм видимым
+	public static void main(String[] args) {
+
+		ButtonFrame frame = new ButtonFrame();// создаем фрейм
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// операция
+																// отвечающая за
+																// окончание
+																// программы
+																// после
+																// закрытия
+																// фрейма
+		frame.setVisible(true);// делаем фрейм видимым
+	}
 }
+
+class ButtonFrame extends JFrame {// создаем класс отвечающий за фрейм
+	public ButtonFrame() {// конструктор данного класа
+		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHE);// размеры фрейма
+		setTitle("Button");// название фрейма
+		ButtonPanel panel = new ButtonPanel();// создаем панель
+		add(panel);// добавляем панель на фрейм
+	}
+
+	public static final int DEFAULT_WIDTH = 300;
+	public static final int DEFAULT_HEIGHE = 200;
 }
-class ButtonFrame extends JFrame{//создаем класс отвечающий за фрейм
-public ButtonFrame(){//конструктор данного класа
-setSize(DEFAULT_WIDTH,DEFAULT_HEIGHE);//размеры фрейма
-setTitle("Button");//название фрейма
-ButtonPanel panel=new ButtonPanel();//создаем панель
-add(panel);//добавляем панель на фрейм
-}
-public static final  int DEFAULT_WIDTH=300;
-public static final  int DEFAULT_HEIGHE=200;
-}
-class ButtonPanel extends JPanel{//класс отвечающий за фрейм
-JTextField textField=new JTextField(20);
 
-public ButtonPanel(){ //конструктор панелиadd(textField);
+class ButtonPanel extends JPanel {// класс отвечающий за фрейм
+	JTextField textField = new JTextField(20);
+	Drc c = new Drc();
 
-JButton yellowButton=new JButton("Add");//создаем кнопки(в качестве параметра текст отображаемы на кнопке)
-JButton blueButton=new JButton("Remove");
-JButton Button =new JButton("Correct?");
-add(yellowButton);//добавляем кнопки на панель
-add(blueButton);
-add(Button);
-add(textField);
-final String s = textField.getText();
-Button.addActionListener(new ActionListener() {//action for correct
-    public void actionPerformed(ActionEvent e) {
-        textField.setText(s);
-    }
-});
+	public ButtonPanel() { // конструктор панелиadd(textField);
 
-blueButton.addActionListener(new ActionListener() {//action for remove
-    public void actionPerformed(ActionEvent e) {
-        textField.setText(s);
-    }
-});
+		JButton yellowButton = new JButton("Add");// создаем кнопки(в качестве
+													// параметра текст
+													// отображаемы на кнопке)
+		JButton blueButton = new JButton("Remove");
+		JButton Button = new JButton("Correct?");
+		add(yellowButton);// добавляем кнопки на панель
+		add(blueButton);
+		add(Button);
+		add(textField);
+		final String s = textField.getText();
+		Button.addActionListener(new ActionListener() {// action for correct
+			public void actionPerformed(ActionEvent e) {
 
-yellowButton.addActionListener(new ActionListener() {//action for add
-    public void actionPerformed(ActionEvent e) {
-    	String s = textField.getText();
-    	textField.setText(s+"sss");
-    }
-});
+				for (Object key : c.hashmap.keySet())
+					System.out.println(c.hashmap.get(key));
 
+			}
+		});
 
+		blueButton.addActionListener(new ActionListener() {// action for remove
+					public void actionPerformed(ActionEvent e) {
+						String s = textField.getText();
+						String b = c.hashmap.get(s.toLowerCase());
 
-}
+						if (c.str(s, b)) {
+
+							s = textField.getText();
+							c.hashmap.remove(s.hashCode());
+							textField.setText(" ");
+
+						} else {
+
+							textField.setText(s + " Error! ");
+
+						}
+
+					}
+				});
+
+		yellowButton.addActionListener(new ActionListener() {// action for add
+					public void actionPerformed(ActionEvent e) {
+						String s = textField.getText();
+						String b = c.hashmap.get(s);
+						System.out.println(b);
+						if (c.str(s, b)) {
+
+							c.hashmap.put(s.hashCode(), s);
+							textField.setText(" ");
+
+						}
+					}
+				});
+
+	}
 
 }

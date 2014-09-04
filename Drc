@@ -1,0 +1,17 @@
+import java.util.*;
+
+public class Drc {
+
+	Map<Object, String> hashmap = new HashMap<Object, String>();
+
+	boolean str(String s, String b) {
+		boolean bv;
+
+		bv = !s.equalsIgnoreCase(b);
+
+		return bv;
+	}
+	
+	
+
+}
